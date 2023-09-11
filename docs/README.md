@@ -272,6 +272,11 @@
 254. 回忆坐标
 255. 播客搜索
 256. 播客声音上传
+257. 验证接口-二维码生成
+258. 验证接口-二维码检测
+259. 听歌识曲
+260. 根据nickname获取userid接口
+=======
 
 ## 安装
 
@@ -4207,7 +4212,64 @@ type='1009' 获取其 id, 如`/search?keywords= 代码时间 &type=1009`
 
 `composedSongs`: 包含歌曲(歌曲id),多个用逗号隔开
 
+### 验证接口-二维码生成
+说明: 进行某些操作,如关注用户,可能会触发验证,可调用这个接口生成二维码,使用app扫码后可解除验证  
 
+**接口地址:** `/verify/getQr`
+
+**必选参数：**   
+
+`vid`: 触发验证后,接口返回的verifyId  
+
+`type`:触发验证后,接口返回的verifyType  
+
+`token`:触发验证后,接口返回的verifyToken  
+
+`evid`:触发验证后,接口返回的params的event_id  
+
+`sign`:触发验证后,接口返回的params的sign
+
+### 验证接口-二维码检测
+说明: 使用此接口,传入`/verify/getQr`接口返回的`qr`字符串,可检测二维码扫描状态
+
+**接口地址:** `/verify/qrcodestatus`
+
+**必选参数：**   
+
+`qr`: `/verify/getQr`接口返回的`qr`字符串
+
+返回结果说明:
+
+qrCodeStatus:0,detailReason:0 二维码生成成功
+
+qrCodeStatus:0,detailReason:303 账号不一致
+
+qrCodeStatus:10,detailReason:0  二维码已扫描,并且手机号相同
+
+qrCodeStatus:20,detailReason:0  验证成功qrCodeStatus:21,detailReason:0 二维码已失效
+
+### 听歌识曲
+说明: 使用此接口,上传音频文件或者麦克风采集声音可识别对应歌曲信息,具体调用例子参考 `/audio_match_demo/index.html` (项目文件: `public/audio_match_demo/index.html`)
+
+**接口地址:** `/audio/match`
+
+**必选参数：**     
+
+`duration`: 音频时长,单位秒
+
+`audioFP`: 音频指纹,参考项目调用例子获取
+
+### 根据nickname获取userid
+说明: 使用此接口,传入用户昵称,可获取对应的用户id,支持批量获取,多个昵称用`分号(;)`隔开  
+
+**必选参数：**  
+
+`nicknames`: 用户昵称,多个用分号(;)隔开
+
+**接口地址:** `/user/nickname`
+
+**调用例子:** `/get/userids?nicknames=binaryify` `/get/userids?nicknames=binaryify;binaryify2`
+=======
 
 ## 离线访问此文档
 
